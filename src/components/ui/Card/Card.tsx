@@ -131,8 +131,8 @@ const Card = ({ country, index }: CardProps) => {
             </Stack>
           </Stack>
           {fullyVacunated}
-          <Box direction={"row"}>
-            <Popover placement={"top"}>
+          <Box direction={"row"} justify="center">
+            <Popover placement={"auto"}>
               <PopoverTrigger>
                 <Badge
                   mt={4}
