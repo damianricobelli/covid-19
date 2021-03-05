@@ -156,7 +156,7 @@ const Card = ({ country, index }: CardProps) => {
                 >
                   More about {country.location}
                 </PopoverHeader>
-                <PopoverBody pb={6}>
+                <PopoverBody pb={6} align={"start"}>
                   <Stack direction={"column"}>
                     <Text>
                       📈 New cases:{" "}
