@@ -14,6 +14,7 @@ const DarkModeButton: FC = () => {
     <div>
       <Flex align="center" justify="center" direction="column">
         <IconButton
+          focusBorderColor={"green.400"}
           aria-label="Toggle mode"
           size="lg"
           bg={useColorModeValue("transparent", "transparent")}

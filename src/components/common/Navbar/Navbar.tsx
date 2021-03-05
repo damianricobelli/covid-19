@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react"
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons"
 
-import DarkModeButton from "@components/DarkModeButton"
+import DarkModeButton from "@components/ui/DarkModeButton"
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
@@ -48,6 +48,7 @@ export default function WithSubnavigation() {
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
           <Heading
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
+            color={"green.400"}
           >
             CoviWorld
           </Heading>
@@ -151,7 +152,7 @@ const NAV_ITEMS: Array<NavItem> = [
     href: "https://github.com/damianricobelli/covid-19"
   },
   {
-    label: "Autor",
+    label: "Author",
     href: "https://www.linkedin.com/in/damianricobelli/"
   }
 ]
