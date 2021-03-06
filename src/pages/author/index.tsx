@@ -145,7 +145,7 @@ const index: React.FC<indexProps> = ({}) => {
                     spacing={2}
                   >
                     <ChakraLink
-                      href="https://www.linkedin.com/in/damianricobelli/"
+                      href="https://github.com/damianricobelli/"
                       isExternal
                     >
                       Repositories
