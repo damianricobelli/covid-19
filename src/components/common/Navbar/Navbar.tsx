@@ -126,7 +126,6 @@ const MobileNavItem = ({ label, href }: NavItem) => {
     <Stack spacing={4} py={2} onClick={onToggle}>
       <Flex
         py={2}
-        as={Link}
         href={href}
         justify={"space-between"}
         align={"center"}
@@ -134,12 +133,25 @@ const MobileNavItem = ({ label, href }: NavItem) => {
           textDecoration: "none"
         }}
       >
-        <Text
-          fontWeight={600}
-          color={useColorModeValue("gray.600", "gray.200")}
-        >
-          {label}
-        </Text>
+        {label === "Repository" ? (
+          <ChakraLink
+            isExternal
+            href="https://github.com/damianricobelli/covid-19"
+            fontWeight={600}
+            color={useColorModeValue("gray.600", "gray.200")}
+          >
+            {label}
+          </ChakraLink>
+        ) : (
+          <Link href={"/author"}>
+            <ChakraLink
+              fontWeight={600}
+              color={useColorModeValue("gray.600", "gray.200")}
+            >
+              {label}
+            </ChakraLink>
+          </Link>
+        )}
       </Flex>
     </Stack>
   )

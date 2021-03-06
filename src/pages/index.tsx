@@ -36,7 +36,6 @@ const Home: FC = () => {
         setDataWorld(resp[0])
         resp = resp.slice(1)
         setData(resp)
-        console.log(resp)
       })
       .catch((err) => {
         console.log(err)
