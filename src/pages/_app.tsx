@@ -9,7 +9,7 @@ import { Router } from "next/dist/client/router"
 import NProgress from "nprogress"
 import "nprogress/nprogress.css"
 
-NProgress.configure({ showSpinner: false, trickleRate: 0.1, trickleSpeed: 300 })
+NProgress.configure({ showSpinner: false, trickleRate: 0.1, trickleSpeed: 200 })
 
 Router.events.on("routeChangeStart", () => {
   NProgress.start()
