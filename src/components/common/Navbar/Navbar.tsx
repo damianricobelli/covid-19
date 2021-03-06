@@ -123,7 +123,7 @@ const MobileNavItem = ({ label, href }: NavItem) => {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
-    <Stack spacing={4} onClick={onToggle}>
+    <Stack spacing={4} py={2} onClick={onToggle}>
       <Flex
         py={2}
         as={Link}
