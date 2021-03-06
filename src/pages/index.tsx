@@ -80,6 +80,7 @@ const Home: FC = () => {
       }
     }
   }, [data, searchValue])
+
   return (
     <>
       <Head>

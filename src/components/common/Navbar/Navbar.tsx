@@ -1,3 +1,4 @@
+import Link from "next/link"
 import {
   Box,
   Flex,
@@ -6,7 +7,7 @@ import {
   Heading,
   Stack,
   Collapse,
-  Link,
+  Link as ChakraLink,
   Popover,
   PopoverTrigger,
   useColorModeValue,
@@ -46,13 +47,15 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Heading
-            textAlign={useBreakpointValue({ base: "center", md: "left" })}
-            color={"green.400"}
-          >
-            CoviWorld
-          </Heading>
-
+          <Link href="/">
+            <Heading
+              style={{ cursor: "pointer" }}
+              textAlign={useBreakpointValue({ base: "center", md: "left" })}
+              color={"green.400"}
+            >
+              CoviWorld
+            </Heading>
+          </Link>
           <Flex display={{ base: "none", md: "flex" }} ml={10} mt={2}>
             <DesktopNav />
           </Flex>
@@ -82,16 +85,17 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <Link
-                p={4}
-                href={navItem.href ?? "#"}
-                fontSize={"sm"}
-                fontWeight={500}
-                _hover={{
-                  textDecoration: "none"
-                }}
-              >
-                {navItem.label}
+              <Link href="/author">
+                <ChakraLink
+                  p={4}
+                  fontSize={"sm"}
+                  fontWeight={500}
+                  _hover={{
+                    textDecoration: "none"
+                  }}
+                >
+                  {navItem.label}
+                </ChakraLink>
               </Link>
             </PopoverTrigger>
           </Popover>
