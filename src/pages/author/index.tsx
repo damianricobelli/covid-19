@@ -18,9 +18,9 @@ interface indexProps {}
 const index: React.FC<indexProps> = ({}) => {
   return (
     <>
-      <Container bg={useColorModeValue("#F9F9F9", "gray.700")} maxW={"100%"}>
+      <Container bg={useColorModeValue("#F9F9F9", "gray.800")} maxW={"100%"}>
         <Stack
-          py={{ base: 20, md: 28 }}
+          py={{ base: 20, md: 24 }}
           px={{ base: 10, md: 20 }}
           align="center"
           justify="center"
