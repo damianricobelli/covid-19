@@ -83,7 +83,7 @@ const Home: FC = () => {
   return (
     <>
       <Head>
-        <title>CoviWorld</title>
+        <title>Covid World</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container maxW={"4xl"}>
@@ -97,7 +97,7 @@ const Home: FC = () => {
             fontWeight={600}
             fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
           >
-            Covid vaccination progress
+            Covid data
             <br />
             <Text as={"span"} color={"green.400"}>
               around the world

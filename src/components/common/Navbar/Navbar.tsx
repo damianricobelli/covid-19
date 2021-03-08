@@ -53,7 +53,7 @@ export default function WithSubnavigation() {
               textAlign={useBreakpointValue({ base: "center", md: "left" })}
               color={"green.400"}
             >
-              CoviWorld
+              Covid World
             </Heading>
           </Link>
           <Flex display={{ base: "none", md: "flex" }} ml={10} mt={2}>
@@ -83,22 +83,35 @@ const DesktopNav = () => {
     <Stack direction={"row"} spacing={4}>
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-              <Link href="/author">
-                <ChakraLink
-                  p={4}
-                  fontSize={"sm"}
-                  fontWeight={500}
-                  _hover={{
-                    textDecoration: "none"
-                  }}
-                >
-                  {navItem.label}
-                </ChakraLink>
-              </Link>
-            </PopoverTrigger>
-          </Popover>
+          {navItem.label === "Repository" ? (
+            <ChakraLink
+              isExternal
+              p={4}
+              fontSize={"sm"}
+              fontWeight={500}
+              _hover={{
+                textDecoration: "none"
+              }}
+              href="https://github.com/damianricobelli/covid-19"
+              color={useColorModeValue("gray.600", "gray.200")}
+            >
+              {navItem.label}
+            </ChakraLink>
+          ) : (
+            <Link href={navItem.href}>
+              <ChakraLink
+                p={4}
+                fontSize={"sm"}
+                fontWeight={500}
+                _hover={{
+                  textDecoration: "none"
+                }}
+                color={useColorModeValue("gray.600", "gray.200")}
+              >
+                {navItem.label}
+              </ChakraLink>
+            </Link>
+          )}
         </Box>
       ))}
     </Stack>
@@ -143,7 +156,7 @@ const MobileNavItem = ({ label, href }: NavItem) => {
             {label}
           </ChakraLink>
         ) : (
-          <Link href={"/author"}>
+          <Link href={href}>
             <ChakraLink
               fontWeight={600}
               color={useColorModeValue("gray.600", "gray.200")}
@@ -164,11 +177,19 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Repository",
-    href: "https://github.com/damianricobelli/covid-19"
+    label: "Home",
+    href: "/"
+  },
+  {
+    label: "News",
+    href: "/news"
   },
   {
     label: "Author",
-    href: "https://www.linkedin.com/in/damianricobelli/"
+    href: "/author"
+  },
+  {
+    label: "Repository",
+    href: "https://github.com/damianricobelli/covid-19"
   }
 ]
