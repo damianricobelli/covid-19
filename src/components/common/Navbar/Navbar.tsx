@@ -53,7 +53,7 @@ export default function WithSubnavigation() {
               textAlign={useBreakpointValue({ base: "center", md: "left" })}
               color={"green.400"}
             >
-              Covid World
+              CovidWorld
             </Heading>
           </Link>
           <Flex display={{ base: "none", md: "flex" }} ml={10} mt={2}>
