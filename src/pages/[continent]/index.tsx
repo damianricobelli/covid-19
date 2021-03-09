@@ -25,13 +25,14 @@ interface indexProps {
 }
 
 const Item: Function = ({ router, item }): JSX.Element => (
-  <Box
-    key={uuid()}
-    py={{ base: 10, md: 12 }}
-    px={10}
-    onClick={(e) => router(e, item.href)}
-  >
-    <h1>{item.Country}</h1>
+  <Box m={10}>
+    <NewsCard
+      image={`../../../assets/img/countries/${item.TwoLetterSymbol}.svg`}
+      isFlag={true}
+      title={item.Continent}
+      subtitle={item.Country}
+      href={item.id}
+    />
   </Box>
 )
 

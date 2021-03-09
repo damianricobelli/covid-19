@@ -17,6 +17,7 @@ export interface ICardNews {
   subtitle?: string
   href?: string
   isMap?: boolean
+  isFlag?: boolean
 }
 
 export const NewsCard: React.FC<ICardNews> = ({
@@ -24,7 +25,8 @@ export const NewsCard: React.FC<ICardNews> = ({
   title,
   subtitle,
   href,
-  isMap
+  isMap,
+  isFlag
 }: ICardNews) => {
   const content = (
     <Box
@@ -43,10 +45,19 @@ export const NewsCard: React.FC<ICardNews> = ({
       zIndex={1}
     >
       <Center>
-        <Box rounded={"lg"} mt={-12} pos={"relative"} height={"200px"}>
+        <Box
+          rounded={"lg"}
+          mt={-12}
+          borderWidth={isFlag ? "1px" : "none"}
+          borderColor={
+            isFlag ? useColorModeValue("gray.400", "transparent") : "none"
+          }
+          pos={"relative"}
+          height={isFlag ? 120 : 200}
+        >
           <ChakraImage
             rounded={"lg"}
-            height={200}
+            height={isFlag ? 118 : 198}
             width={200}
             objectFit={"cover"}
             src={image}
@@ -54,14 +65,16 @@ export const NewsCard: React.FC<ICardNews> = ({
         </Box>
       </Center>
       <Stack pt={10} align={"center"}>
-        <Text
-          noOfLines={1}
-          color={"gray.500"}
-          fontSize={"sm"}
-          textTransform={"uppercase"}
-        >
-          {title}
-        </Text>
+        {!isFlag && (
+          <Text
+            noOfLines={1}
+            color={"gray.500"}
+            fontSize={"sm"}
+            textTransform={"uppercase"}
+          >
+            {title}
+          </Text>
+        )}
         <Heading
           fontSize={"2xl"}
           textAlign={"center"}
