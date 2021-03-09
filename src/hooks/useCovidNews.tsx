@@ -7,12 +7,10 @@ function getStatus({ data, error }) {
   return "success"
 }
 
-const KEY = "e1c9808665msh5db11d0cf859419p1ad5cdjsn49a380b966c1"
-const HOST = "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com"
 export const CONFIG = {
   headers: {
-    "x-rapidapi-key": KEY,
-    "x-rapidapi-host": HOST,
+    "x-rapidapi-key": process.env.key,
+    "x-rapidapi-host": process.env.host,
     useQueryString: true
   }
 }
