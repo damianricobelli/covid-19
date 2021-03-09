@@ -1,5 +1,6 @@
 import { FC } from "react"
-import { useCovidNews } from "@hooks/useCovidNews"
+import Head from "next/head"
+import { useCovidData } from "@hooks/useCovidData"
 import { useRouter } from "next/router"
 import uuid from "react-uuid"
 import {
@@ -11,7 +12,6 @@ import {
   Flex,
   Skeleton,
   SkeletonText,
-  Button,
   Alert,
   AlertIcon,
   AlertTitle,
@@ -24,48 +24,61 @@ interface indexProps {
   posts: any
 }
 
-const Item: Function = (info: any): JSX.Element => {
-  return (
-    <Box m={10}>
-      <NewsCard
-        image={info.data.urlToImage}
-        title={info.data.title}
-        subtitle={info.data.title}
-        href={info.data.link}
-      />
-    </Box>
-  )
-}
+const Item: Function = ({ router, item }): JSX.Element => (
+  <Box
+    key={uuid()}
+    py={{ base: 10, md: 12 }}
+    px={10}
+    onClick={(e) => router(e, item.href)}
+  >
+    <h1>{item.Country}</h1>
+  </Box>
+)
 
 const index: FC<indexProps> = () => {
   const router = useRouter()
+  const handleClick = (e: any, href: string) => {
+    e.preventDefault()
+    router.push({
+      pathname: "/[continent]",
+      query: { continent: href }
+    })
+  }
   let path = null
-  let title = "Watch the latest news"
   let subtitle = null
-  switch (router.query.type) {
-    case "vaccine":
-      path = "get-vaccine-news"
-      subtitle = "about vaccine"
+  switch (router.query.continent) {
+    case "world":
+      path = "world"
+      subtitle = "about the world"
       break
-    case "health":
-      path = "get-health-news"
-      subtitle = "about health"
+    case "australia":
+      path = "australia"
+      subtitle = "about the countries of Australia"
       break
-    case "covid":
-      path = "get-coronavirus-news"
-      subtitle = "about coronavirus"
+    case "africa":
+      path = "africa"
+      subtitle = "about the countries of Africa"
+      break
+    case "europe":
+      path = "europe"
+      subtitle = "about the countries of Europe"
+      break
+    case "northamerica":
+      path = "northamerica"
+      subtitle = "about the countries of North America"
+      break
+    case "southamerica":
+      path = "southamerica"
+      subtitle = "about the countries of South America"
+      break
+    case "asia":
+      path = "asia"
+      subtitle = "about the countries of Asia"
       break
     default:
       break
   }
-  const {
-    data,
-    error,
-    isLoadingMore,
-    isReachingEnd,
-    size,
-    setSize
-  } = useCovidNews({
+  const { data, error } = useCovidData({
     path: path
   })
 
@@ -112,11 +125,7 @@ const index: FC<indexProps> = () => {
               fontWeight={600}
               fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
             >
-              Looking for the latest news
-              <br />
-              <Text as={"span"} color={"green.400"}>
-                {subtitle}
-              </Text>
+              Looking for the latest data...
             </Heading>
           </Stack>
         </Container>
@@ -133,8 +142,9 @@ const index: FC<indexProps> = () => {
                 height={"100%"}
                 key={uuid()}
                 padding="6"
-                m={10}
-                boxShadow={"lg"}
+                my={{ base: 10, md: 12 }}
+                mx={10}
+                boxShadow="lg"
                 rounded={"lg"}
                 bg="white"
                 w={"330px"}
@@ -148,10 +158,16 @@ const index: FC<indexProps> = () => {
         </Stack>
       </>
     )
+  } else {
+    console.log(data)
   }
 
   return (
     <>
+      <Head>
+        <title>Covid World</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Container maxW={"4xl"}>
         <Stack
           as={Box}
@@ -163,39 +179,25 @@ const index: FC<indexProps> = () => {
             fontWeight={600}
             fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
           >
-            {title}
+            Covid data
             <br />
             <Text as={"span"} color={"green.400"}>
-              {subtitle}
+              around the world
             </Text>
           </Heading>
         </Stack>
       </Container>
-      <Stack as={Box} align="center" justify="center">
-        <Flex
-          px={10}
-          wrap={"wrap"}
-          direction={"row"}
-          justify="center"
-          align="center"
-        >
-          {data.map((el) => {
-            return el.news.map((data: any) => <Item key={uuid()} data={data} />)
-          })}
-        </Flex>
-        <Button
-          disabled={isLoadingMore || isReachingEnd}
-          my={20}
-          colorScheme="green"
-          onClick={() => setSize(size + 1)}
-        >
-          {isLoadingMore
-            ? "Loading..."
-            : isReachingEnd
-            ? "No more news"
-            : "Load more"}
-        </Button>
-      </Stack>
+      <Flex
+        px={10}
+        wrap={"wrap"}
+        direction={"row"}
+        justify="center"
+        align="center"
+      >
+        {data.map((item: any) => (
+          <Item item={item} router={handleClick} />
+        ))}
+      </Flex>
     </>
   )
 }

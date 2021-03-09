@@ -1,84 +1,85 @@
-import { useState, useEffect, FC, useMemo } from "react"
+import { FC } from "react"
 import uuid from "react-uuid"
-import axios from "axios"
+import { useRouter } from "next/router"
 import Head from "next/head"
-import {
-  Container,
-  Box,
-  Heading,
-  Text,
-  Stack,
-  SimpleGrid,
-  CircularProgress,
-  Center,
-  Alert,
-  AlertTitle,
-  AlertIcon,
-  AlertDescription
-} from "@chakra-ui/react"
-import SearchInput from "@components/ui/SearchInput"
-import Card from "@components/ui/Card"
+import { Container, Box, Heading, Text, Stack, Flex } from "@chakra-ui/react"
+
+import { ICardNews, NewsCard } from "@components/ui/BlogCard"
+
+const ITEMS: Array<ICardNews> = [
+  {
+    image: "/assets/img/continents/all-world.svg",
+    title: "All world",
+    subtitle: "Covid statistics in the world",
+    href: "world"
+  },
+  {
+    image: "/assets/img/continents/asia.svg",
+    title: "Asia",
+    subtitle: "Covid statistics in Asia",
+    href: "asia"
+  },
+  {
+    image: "/assets/img/continents/africa.svg",
+    title: "Africa",
+    subtitle: "Covid statistics in Africa",
+    href: "africa"
+  },
+  {
+    image: "/assets/img/continents/europe.svg",
+    title: "Europe",
+    subtitle: "Covid statistics in Europe",
+    href: "europe"
+  },
+  {
+    image: "/assets/img/continents/north-america.svg",
+    title: "North America",
+    subtitle: "Covid statistics in North America",
+    href: "northamerica"
+  },
+  {
+    image: "/assets/img/continents/south-america.svg",
+    title: "South America",
+    subtitle: "Covid statistics in Australia",
+    href: "southamerica"
+  },
+  {
+    image: "/assets/img/continents/oceania.svg",
+    title: "Oceania",
+    subtitle: "Covid statistics in Oceania",
+    href: "australia"
+  }
+]
+
+const Items: Function = ({ router }): JSX.Element[] => {
+  return ITEMS.map((item) => (
+    <Box
+      key={uuid()}
+      py={{ base: 10, md: 12 }}
+      px={10}
+      onClick={(e) => router(e, item.href)}
+    >
+      <NewsCard
+        image={item.image}
+        title={item.title}
+        subtitle={item.subtitle}
+        href={item.href}
+        isMap={true}
+      />
+    </Box>
+  ))
+}
 
 const Home: FC = () => {
-  const [searchValue, setSearchValue] = useState<string>("")
-  const [data, setData] = useState(null)
-  const [dataWorld, setDataWorld] = useState(null)
+  const router = useRouter()
 
-  useEffect(() => {
-    axios
-      .get(
-        "https://covid.ourworldindata.org/data/latest/owid-covid-latest.json"
-      )
-      .then((response) => {
-        let resp = Object.values(response.data).sort(
-          ({ total_vaccinations: a }, { total_vaccinations: b }) => b - a
-        )
-        setDataWorld(resp[0])
-        resp = resp.slice(1)
-        setData(resp)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    return () => {}
-  }, [])
-
-  let showData = null
-
-  showData = useMemo(() => {
-    if (!data) {
-      return <CircularProgress isIndeterminate color="green.300" />
-    } else {
-      if (searchValue !== "") {
-        const searchValueCapitalize =
-          searchValue.charAt(0).toUpperCase() + searchValue.slice(1)
-        const newData = data.filter((el: any, i: number) =>
-          el.location.includes(searchValueCapitalize)
-        )
-        if (newData.length === 0) {
-          return (
-            <Alert status="error">
-              <AlertIcon />
-              <AlertTitle mr={2}>
-                The country you are looking for does not exist
-              </AlertTitle>
-              <AlertDescription>
-                Are you sure that's how it's spelled?
-              </AlertDescription>
-            </Alert>
-          )
-        } else {
-          return newData.map((el: any, i: number) => (
-            <Card key={uuid()} country={el} index={i + 1} />
-          ))
-        }
-      } else {
-        return data.map((el: any, i: number) => (
-          <Card key={uuid()} country={el} index={i + 1} />
-        ))
-      }
-    }
-  }, [data, searchValue])
+  const handleClick = (e: any, href: string) => {
+    e.preventDefault()
+    router.push({
+      pathname: "/[continent]",
+      query: { continent: href }
+    })
+  }
 
   return (
     <>
@@ -105,21 +106,15 @@ const Home: FC = () => {
           </Heading>
         </Stack>
       </Container>
-      <SearchInput
-        changed={(e: any) => setSearchValue(e.currentTarget.value)}
-      />
-      <Center py={{ base: 12, md: 20 }} px={{ base: 4, md: 16 }}>
-        {data ? (
-          <SimpleGrid
-            columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
-            spacing={{ base: 6, md: 10 }}
-          >
-            {showData}
-          </SimpleGrid>
-        ) : (
-          showData
-        )}
-      </Center>
+      <Flex
+        px={10}
+        wrap={"wrap"}
+        direction={"row"}
+        justify="center"
+        align="center"
+      >
+        <Items router={handleClick} />
+      </Flex>
     </>
   )
 }
