@@ -7,11 +7,23 @@ import { Container, Box, Heading, Text, Stack, Flex } from "@chakra-ui/react"
 import { ICardNews, NewsCard } from "@components/ui/BlogCard"
 
 const ITEMS: Array<ICardNews> = [
+  // {
+  //   image: "/assets/img/continents/all-world.svg",
+  //   title: "All world",
+  //   subtitle: "Covid statistics in the world",
+  //   href: "world"
+  // },
   {
-    image: "/assets/img/continents/all-world.svg",
-    title: "All world",
-    subtitle: "Covid statistics in the world",
-    href: "world"
+    image: "/assets/img/continents/north-america.svg",
+    title: "North America",
+    subtitle: "Covid statistics in North America",
+    href: "northamerica"
+  },
+  {
+    image: "/assets/img/continents/south-america.svg",
+    title: "South America",
+    subtitle: "Covid statistics in South America",
+    href: "southamerica"
   },
   {
     image: "/assets/img/continents/asia.svg",
@@ -30,18 +42,6 @@ const ITEMS: Array<ICardNews> = [
     title: "Europe",
     subtitle: "Covid statistics in Europe",
     href: "europe"
-  },
-  {
-    image: "/assets/img/continents/north-america.svg",
-    title: "North America",
-    subtitle: "Covid statistics in North America",
-    href: "northamerica"
-  },
-  {
-    image: "/assets/img/continents/south-america.svg",
-    title: "South America",
-    subtitle: "Covid statistics in Australia",
-    href: "southamerica"
   },
   {
     image: "/assets/img/continents/oceania.svg",
@@ -107,7 +107,8 @@ const Home: FC = () => {
         </Stack>
       </Container>
       <Flex
-        px={10}
+        px={20}
+        pb={10}
         wrap={"wrap"}
         direction={"row"}
         justify="center"

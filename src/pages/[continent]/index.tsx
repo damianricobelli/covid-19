@@ -11,7 +11,7 @@ import {
   Container,
   Flex,
   Skeleton,
-  SkeletonText,
+  Center,
   Alert,
   AlertIcon,
   AlertTitle,
@@ -48,40 +48,38 @@ const index: FC<indexProps> = () => {
   let path = null
   let subtitle = null
   switch (router.query.continent) {
-    case "world":
-      path = "world"
-      subtitle = "about the world"
-      break
     case "australia":
       path = "australia"
-      subtitle = "about the countries of Australia"
+      subtitle = "Australia"
       break
     case "africa":
       path = "africa"
-      subtitle = "about the countries of Africa"
+      subtitle = "Africa"
       break
     case "europe":
       path = "europe"
-      subtitle = "about the countries of Europe"
+      subtitle = "Europe"
       break
     case "northamerica":
       path = "northamerica"
-      subtitle = "about the countries of North America"
+      subtitle = "North America"
       break
     case "southamerica":
       path = "southamerica"
-      subtitle = "about the countries of South America"
+      subtitle = "South America"
       break
     case "asia":
       path = "asia"
-      subtitle = "about the countries of Asia"
+      subtitle = "Asia"
       break
     default:
       break
   }
-  const { data, error } = useCovidData({
+  const { data, error, isLoadingSlow } = useCovidData({
     path: path
   })
+
+  console.log(isLoadingSlow)
 
   if (error) {
     return (
@@ -112,7 +110,7 @@ const index: FC<indexProps> = () => {
     )
   }
 
-  if (!data) {
+  if (!data && !isLoadingSlow) {
     return (
       <>
         <Container maxW={"4xl"}>
@@ -138,29 +136,94 @@ const index: FC<indexProps> = () => {
             justify="center"
             align="center"
           >
-            {[0, 1, 2, 3, 4, 5].map((el) => (
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((el) => (
               <Box
                 height={"100%"}
                 key={uuid()}
                 padding="6"
-                my={{ base: 10, md: 12 }}
-                mx={10}
+                m={10}
                 boxShadow="lg"
                 rounded={"lg"}
                 bg="white"
-                w={"330px"}
+                maxW={"268px"}
+                w={"full"}
               >
-                <Skeleton height={230} width={282} rounded={"lg"} />
-                <SkeletonText mt="4" noOfLines={1} spacing="4" />
-                <SkeletonText mt="4" noOfLines={4} spacing="4" />
+                <Center>
+                  <Skeleton
+                    height={118}
+                    width={200}
+                    position={"relative"}
+                    mt={-12}
+                    rounded={"lg"}
+                  />
+                </Center>
+                <Skeleton mt={10} height={6} />
               </Box>
             ))}
           </Flex>
         </Stack>
       </>
     )
-  } else {
-    console.log(data)
+  }
+
+  if (!data && isLoadingSlow) {
+    return (
+      <>
+        <Container maxW={"4xl"}>
+          <Stack
+            as={Box}
+            textAlign={"center"}
+            spacing={{ base: 8, md: 14 }}
+            py={{ base: 12, md: 16 }}
+          >
+            <Heading
+              fontWeight={600}
+              fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
+            >
+              Our server is slower than usual
+              <br />
+              <Text as={"span"} color={"green.400"}>
+                Thanks for your patient 🙏
+              </Text>
+            </Heading>
+          </Stack>
+        </Container>
+        <Stack as={Box} align="center" justify="center">
+          <Flex
+            px={10}
+            wrap={"wrap"}
+            direction={"row"}
+            justify="center"
+            align="center"
+          >
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((el) => (
+              <Box
+                height={"100%"}
+                key={uuid()}
+                padding="6"
+                m={10}
+                boxShadow="lg"
+                rounded={"lg"}
+                bg="white"
+                maxW={"268px"}
+                w={"full"}
+              >
+                <Center>
+                  <Skeleton
+                    height={118}
+                    width={200}
+                    position={"relative"}
+                    mt={-12}
+                    rounded={"lg"}
+                  />
+                </Center>
+                <Skeleton mt={10} height={6} />
+              </Box>
+            ))}
+          </Flex>
+        </Stack>
+      </>
+    )
   }
 
   return (
@@ -183,7 +246,7 @@ const index: FC<indexProps> = () => {
             Covid data
             <br />
             <Text as={"span"} color={"green.400"}>
-              around the world
+              {subtitle}
             </Text>
           </Heading>
         </Stack>

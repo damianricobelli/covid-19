@@ -1,3 +1,4 @@
+import React from "react"
 import useSWR from "swr"
 import axios from "axios"
 
@@ -21,10 +22,25 @@ export const fetcher = async (path: string): Promise<any> => {
 }
 
 export const useCovidData = ({ path }) => {
-  const { data, error } = useSWR(path, fetcher)
+  const [isLoadingSlow, setIsLoadingSlow] = React.useState(false)
+
+  const { data, error } = useSWR(path, fetcher, {
+    loadingTimeout: 3000,
+    onLoadingSlow(key, config) {
+      setIsLoadingSlow(true)
+    }
+  })
+
+  React.useEffect(() => {
+    if (data && isLoadingSlow) {
+      const timer = setTimeout(setIsLoadingSlow, 3000, false)
+      return () => clearTimeout(timer)
+    }
+  }, [data, isLoadingSlow])
+
   const status = getStatus({ data, error })
   const isLoading = status === "loading"
   const isError = status === "error"
   const isSuccess = status === "success"
-  return { isLoading, isError, isSuccess, data, error }
+  return { isLoading, isError, isLoadingSlow, isSuccess, data, error }
 }
