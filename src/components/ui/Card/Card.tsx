@@ -73,7 +73,7 @@ const Card = ({ country, index }: CardProps) => {
   return (
     <Box
       bg={useColorModeValue("white", "gray.700")}
-      boxShadow={"xl"}
+      boxShadow={"lg"}
       rounded={"lg"}
       maxW="320px"
       p={6}

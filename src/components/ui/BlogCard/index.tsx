@@ -13,7 +13,7 @@ import {
 
 export interface ICardNews {
   image?: string
-  title: string
+  title?: string
   subtitle?: string
   href?: string
   isMap?: boolean
@@ -39,7 +39,7 @@ export const NewsCard: React.FC<ICardNews> = ({
       maxW={"340px"}
       w={"full"}
       bg={useColorModeValue("white", "gray.700")}
-      boxShadow={"2xl"}
+      boxShadow={"lg"}
       rounded={"lg"}
       pos={"relative"}
       zIndex={1}
@@ -70,6 +70,7 @@ export const NewsCard: React.FC<ICardNews> = ({
             noOfLines={1}
             color={"gray.500"}
             fontSize={"sm"}
+            textAlign={"center"}
             textTransform={"uppercase"}
           >
             {title}
@@ -88,7 +89,7 @@ export const NewsCard: React.FC<ICardNews> = ({
     </Box>
   )
 
-  if (isMap) {
+  if (isMap || isFlag) {
     return <Link href={href}>{content}</Link>
   } else {
     return (

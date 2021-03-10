@@ -11,15 +11,11 @@ import {
   Container,
   Flex,
   Skeleton,
-  Center,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription
+  Center
 } from "@chakra-ui/react"
 
 import { NewsCard } from "@components/ui/BlogCard"
-
+import { Error, LoadingSlow, LookingData } from "@components/common/SWR"
 interface indexProps {
   posts: any
 }
@@ -31,20 +27,13 @@ const Item: Function = ({ router, item }): JSX.Element => (
       isFlag={true}
       title={item.Continent}
       subtitle={item.Country}
-      href={item.id}
+      href={`/${router}/${item.ThreeLetterSymbol.toUpperCase()}`}
     />
   </Box>
 )
 
 const index: FC<indexProps> = () => {
   const router = useRouter()
-  const handleClick = (e: any, href: string) => {
-    e.preventDefault()
-    router.push({
-      pathname: "/[continent]",
-      query: { continent: href }
-    })
-  }
   let path = null
   let subtitle = null
   switch (router.query.continent) {
@@ -79,55 +68,14 @@ const index: FC<indexProps> = () => {
     path: path
   })
 
-  console.log(isLoadingSlow)
-
   if (error) {
-    return (
-      <Container maxW={"4xl"}>
-        <Stack
-          as={Box}
-          textAlign={"center"}
-          spacing={{ base: 8, md: 14 }}
-          py={{ base: 12, md: 16 }}
-        >
-          <Heading
-            fontWeight={600}
-            fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
-          >
-            Ups...
-            <br />
-            <Text as={"span"} color={"green.400"}>
-              something went wrong
-            </Text>
-          </Heading>
-        </Stack>
-        <Alert status="error">
-          <AlertIcon />
-          <AlertTitle mr={2}>There was a problem loading the data</AlertTitle>
-          <AlertDescription>Please try again later.</AlertDescription>
-        </Alert>
-      </Container>
-    )
+    return <Error />
   }
 
   if (!data && !isLoadingSlow) {
     return (
       <>
-        <Container maxW={"4xl"}>
-          <Stack
-            as={Box}
-            textAlign={"center"}
-            spacing={{ base: 8, md: 14 }}
-            py={{ base: 12, md: 16 }}
-          >
-            <Heading
-              fontWeight={600}
-              fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
-            >
-              Looking for the latest data...
-            </Heading>
-          </Stack>
-        </Container>
+        <LookingData />
         <Stack as={Box} align="center" justify="center">
           <Flex
             px={10}
@@ -136,10 +84,10 @@ const index: FC<indexProps> = () => {
             justify="center"
             align="center"
           >
-            {[0, 1, 2, 3, 4, 5, 6, 7].map((el) => (
+            {[0, 1, 2, 3, 4, 5, 6, 7].map(() => (
               <Box
-                height={"100%"}
                 key={uuid()}
+                height={"100%"}
                 padding="6"
                 m={10}
                 boxShadow="lg"
@@ -164,30 +112,14 @@ const index: FC<indexProps> = () => {
         </Stack>
       </>
     )
+  } else {
+    console.log(data)
   }
 
   if (!data && isLoadingSlow) {
     return (
       <>
-        <Container maxW={"4xl"}>
-          <Stack
-            as={Box}
-            textAlign={"center"}
-            spacing={{ base: 8, md: 14 }}
-            py={{ base: 12, md: 16 }}
-          >
-            <Heading
-              fontWeight={600}
-              fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
-            >
-              Our server is slower than usual
-              <br />
-              <Text as={"span"} color={"green.400"}>
-                Thanks for your patient 🙏
-              </Text>
-            </Heading>
-          </Stack>
-        </Container>
+        <LoadingSlow />
         <Stack as={Box} align="center" justify="center">
           <Flex
             px={10}
@@ -259,7 +191,7 @@ const index: FC<indexProps> = () => {
         align="center"
       >
         {data.map((item: any) => (
-          <Item item={item} router={handleClick} />
+          <Item key={uuid()} item={item} router={router.query.continent} />
         ))}
       </Flex>
     </>

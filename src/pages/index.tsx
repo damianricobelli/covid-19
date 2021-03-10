@@ -2,51 +2,52 @@ import { FC } from "react"
 import uuid from "react-uuid"
 import { useRouter } from "next/router"
 import Head from "next/head"
-import { Container, Box, Heading, Text, Stack, Flex } from "@chakra-ui/react"
+import {
+  Container,
+  Box,
+  Heading,
+  Text,
+  Stack,
+  Flex,
+  Spinner,
+  Center
+} from "@chakra-ui/react"
 
 import { ICardNews, NewsCard } from "@components/ui/BlogCard"
+import { Error, LoadingSlow } from "@components/common/SWR"
+import { useCovidData } from "@hooks/useCovidData"
+import { StaticsCard } from "@components/ui/StaticsCard"
 
 const ITEMS: Array<ICardNews> = [
-  // {
-  //   image: "/assets/img/continents/all-world.svg",
-  //   title: "All world",
-  //   subtitle: "Covid statistics in the world",
-  //   href: "world"
-  // },
   {
     image: "/assets/img/continents/north-america.svg",
-    title: "North America",
-    subtitle: "Covid statistics in North America",
+
+    subtitle: "North America",
     href: "northamerica"
   },
   {
     image: "/assets/img/continents/south-america.svg",
-    title: "South America",
-    subtitle: "Covid statistics in South America",
+    subtitle: "South America",
     href: "southamerica"
   },
   {
     image: "/assets/img/continents/asia.svg",
-    title: "Asia",
-    subtitle: "Covid statistics in Asia",
+    subtitle: "Asia",
     href: "asia"
   },
   {
     image: "/assets/img/continents/africa.svg",
-    title: "Africa",
-    subtitle: "Covid statistics in Africa",
+    subtitle: "Africa",
     href: "africa"
   },
   {
     image: "/assets/img/continents/europe.svg",
-    title: "Europe",
-    subtitle: "Covid statistics in Europe",
+    subtitle: "Europe",
     href: "europe"
   },
   {
     image: "/assets/img/continents/oceania.svg",
-    title: "Oceania",
-    subtitle: "Covid statistics in Oceania",
+    subtitle: "Oceania",
     href: "australia"
   }
 ]
@@ -56,7 +57,7 @@ const Items: Function = ({ router }): JSX.Element[] => {
     <Box
       key={uuid()}
       py={{ base: 10, md: 12 }}
-      px={10}
+      px={{ base: 0, sm: 10 }}
       onClick={(e) => router(e, item.href)}
     >
       <NewsCard
@@ -70,7 +71,7 @@ const Items: Function = ({ router }): JSX.Element[] => {
   ))
 }
 
-const Home: FC = () => {
+const Home: FC = ({}) => {
   const router = useRouter()
 
   const handleClick = (e: any, href: string) => {
@@ -79,6 +80,54 @@ const Home: FC = () => {
       pathname: "/[continent]",
       query: { continent: href }
     })
+  }
+
+  const { data, error, isLoadingSlow } = useCovidData({
+    path: "world"
+  })
+
+  if (error) {
+    return <Error />
+  }
+
+  let spinner = null
+
+  if (!data && !isLoadingSlow) {
+    spinner = (
+      <Center pb={20}>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      </Center>
+    )
+  }
+
+  if (!data && isLoadingSlow) {
+    return <LoadingSlow />
+  }
+
+  let statics = []
+  if (data) {
+    statics = [
+      { title: "TOTAL CASES", value: data[0].TotalCases, color: "green.400" },
+      { title: "NEW CASES", value: data[0].NewCases, color: "green.400" },
+      {
+        title: "ACTIVE CASES",
+        value: data[0].ActiveCases,
+        color: "yellow.400"
+      },
+      {
+        title: "CRITICAL",
+        value: data[0].Serious_Critical,
+        color: "orange.400"
+      },
+      { title: "TOTAL DEATHS", value: data[0].TotalDeaths, color: "red.400" },
+      { title: "NEW DEATHS", value: data[0].NewDeaths, color: "red.400" }
+    ]
   }
 
   return (
@@ -106,8 +155,9 @@ const Home: FC = () => {
           </Heading>
         </Stack>
       </Container>
+      {spinner ? spinner : <StaticsCard data={statics} />}
       <Flex
-        px={20}
+        px={{ base: 0, sm: 10 }}
         pb={10}
         wrap={"wrap"}
         direction={"row"}
