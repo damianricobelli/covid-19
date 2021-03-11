@@ -9,17 +9,29 @@ import {
   SimpleGrid
 } from "@chakra-ui/react"
 
+import uuid from "react-uuid"
+
 interface indextProps {
   data: any
+  isStatics?: boolean
 }
 
-export const StaticsCard: React.FC<indextProps> = ({ data }) => {
+export const StaticsCard: React.FC<indextProps> = ({ data, isStatics }) => {
   return (
     <Box as="section" pb={12}>
       <Box maxW="7xl" mx="auto" px={{ base: "6", md: "8" }}>
-        <SimpleGrid columns={{ base: 2, md: 3 }} spacing="6">
+        <SimpleGrid
+          columns={{
+            base: isStatics ? 1 : 2,
+            sm: 2,
+            md: 3,
+            lg: isStatics ? 4 : 3
+          }}
+          spacing="6"
+        >
           {data.map((item: any) => (
             <Stat
+              key={uuid()}
               px={{ base: 4, sm: 6 }}
               py="5"
               bg={useColorModeValue("white", "gray.700")}
@@ -34,11 +46,13 @@ export const StaticsCard: React.FC<indextProps> = ({ data }) => {
                 {item.title}
               </StatLabel>
               <StatNumber
-                fontSize="3xl"
+                fontSize={{ base: "xl", sm: "2xl", md: "3xl" }}
                 fontWeight="medium"
                 color={useColorModeValue(item.color, "white")}
               >
-                {item.value}
+                {item.isPercentage
+                  ? `${item.value}%`
+                  : Number(item.value).toLocaleString()}
               </StatNumber>
             </Stat>
           ))}

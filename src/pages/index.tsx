@@ -141,7 +141,7 @@ const Home: FC = ({}) => {
           as={Box}
           textAlign={"center"}
           spacing={{ base: 8, md: 14 }}
-          py={{ base: 12, md: 16 }}
+          py={{ base: 10, md: 12 }}
         >
           <Heading
             fontWeight={600}
@@ -157,7 +157,7 @@ const Home: FC = ({}) => {
       </Container>
       {spinner ? spinner : <StaticsCard data={statics} />}
       <Flex
-        px={{ base: 0, sm: 10 }}
+        px={{ base: 0, md: 10 }}
         pb={10}
         wrap={"wrap"}
         direction={"row"}

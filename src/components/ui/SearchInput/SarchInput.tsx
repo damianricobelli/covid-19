@@ -22,7 +22,7 @@ const SearchInput = ({ changed }: SarchInputProps) => {
           focusBorderColor={"green.400"}
           type="text"
           onChange={changed}
-          placeholder="Search by country"
+          placeholder="Search country"
         />
       </InputGroup>
     </Container>

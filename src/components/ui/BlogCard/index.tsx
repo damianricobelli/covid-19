@@ -89,8 +89,10 @@ export const NewsCard: React.FC<ICardNews> = ({
     </Box>
   )
 
-  if (isMap || isFlag) {
+  if (isMap) {
     return <Link href={href}>{content}</Link>
+  } else if (isFlag) {
+    return <Box>{content}</Box>
   } else {
     return (
       <ChakraLink

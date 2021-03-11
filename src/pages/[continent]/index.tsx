@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import Head from "next/head"
 import { useCovidData } from "@hooks/useCovidData"
 import { useRouter } from "next/router"
@@ -11,29 +11,104 @@ import {
   Container,
   Flex,
   Skeleton,
-  Center
+  Center,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  IconButton,
+  Button,
+  Kbd
 } from "@chakra-ui/react"
 
 import { NewsCard } from "@components/ui/BlogCard"
 import { Error, LoadingSlow, LookingData } from "@components/common/SWR"
+
+import { StaticsCard } from "@components/ui/StaticsCard"
 interface indexProps {
   posts: any
 }
 
-const Item: Function = ({ router, item }): JSX.Element => (
-  <Box m={10}>
+const Item: Function = ({ item, clicked }): JSX.Element => (
+  <Box m={10} onClick={() => clicked(item)}>
     <NewsCard
       image={`../../../assets/img/countries/${item.TwoLetterSymbol}.svg`}
       isFlag={true}
       title={item.Continent}
       subtitle={item.Country}
-      href={`/${router}/${item.ThreeLetterSymbol.toUpperCase()}`}
     />
   </Box>
 )
 
 const index: FC<indexProps> = () => {
   const router = useRouter()
+  const [dataItem, setDataItem] = useState<any>(null)
+  const [staticsItem, setStaticsItem] = useState<any>(null)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const handleOpen = (item: any) => {
+    setDataItem(item)
+    setStaticsItem([
+      { title: "TOTAL CASES", value: item.TotalCases, color: "green.400" },
+      { title: "NEW CASES", value: item.NewCases, color: "green.400" },
+      {
+        title: "INFECTION RISK",
+        value: item.Infection_Risk,
+        color: "green.400",
+        isPercentage: true
+      },
+      {
+        title: "ACTIVE CASES",
+        value: item.ActiveCases,
+        color: "yellow.400"
+      },
+      {
+        title: "SERIOUS CRITICAL",
+        value: item.Serious_Critical,
+        color: "red.400"
+      },
+      {
+        title: "TOTAL RECOVERED",
+        value: item.TotalRecovered,
+        color: "cyan.400"
+      },
+      { title: "TOTAL DEATHS", value: item.TotalDeaths, color: "red.400" },
+      { title: "NEW DEATHS", value: item.NewDeaths, color: "red.400" },
+      {
+        title: "CASE FATALITY RATE",
+        value: item.Case_Fatality_Rate,
+        color: "red.400",
+        isPercentage: true
+      },
+      {
+        title: "TOTAL TESTS",
+        value: item.TotalTests,
+        color: "cyan.400"
+      },
+      {
+        title: "TEST PERCENTAGE",
+        value: item.Test_Percentage,
+        color: "cyan.400",
+        isPercentage: true
+      },
+      {
+        title: "RECOVERY PROPORATION",
+        value: item.Recovery_Proporation,
+        color: "cyan.400",
+        isPercentage: true
+      }
+    ])
+    onOpen()
+  }
+
+  const handleClose = () => {
+    console.log(dataItem)
+    setDataItem(null)
+    onClose()
+  }
+
   let path = null
   let subtitle = null
   switch (router.query.continent) {
@@ -112,8 +187,6 @@ const index: FC<indexProps> = () => {
         </Stack>
       </>
     )
-  } else {
-    console.log(data)
   }
 
   if (!data && isLoadingSlow) {
@@ -175,8 +248,6 @@ const index: FC<indexProps> = () => {
             fontWeight={600}
             fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
           >
-            Covid data
-            <br />
             <Text as={"span"} color={"green.400"}>
               {subtitle}
             </Text>
@@ -191,9 +262,57 @@ const index: FC<indexProps> = () => {
         align="center"
       >
         {data.map((item: any) => (
-          <Item key={uuid()} item={item} router={router.query.continent} />
+          <Item key={uuid()} item={item} clicked={handleOpen} />
         ))}
       </Flex>
+      <Drawer
+        onClose={onClose}
+        onEsc={() => handleClose()}
+        isOpen={isOpen}
+        size={"full"}
+      >
+        <DrawerOverlay>
+          <DrawerContent>
+            <DrawerHeader pt={6}>
+              <Container maxW={"4xl"}>
+                <Center>
+                  <Box fontSize={"xs"} pb={4}>
+                    Press <Kbd>ESC</Kbd> key to exit or &nbsp;&nbsp;
+                    <Button
+                      onClick={() => handleClose()}
+                      colorScheme="teal"
+                      variant="solid"
+                      size="xs"
+                    >
+                      Close
+                    </Button>
+                  </Box>
+                </Center>
+                <Stack
+                  as={Box}
+                  textAlign={"center"}
+                  spacing={{ base: 8, md: 14 }}
+                  py={{ base: 6 }}
+                >
+                  <Heading
+                    fontWeight={600}
+                    fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
+                  >
+                    Statistical data of
+                    <br />
+                    <Text as={"span"} color={"green.400"}>
+                      {dataItem?.Country}
+                    </Text>
+                  </Heading>
+                </Stack>
+              </Container>
+            </DrawerHeader>
+            <DrawerBody>
+              <StaticsCard data={staticsItem} isStatics={true} />
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
     </>
   )
 }
