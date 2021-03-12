@@ -20,7 +20,7 @@ const index: React.FC<indexProps> = ({}) => {
     <>
       <Container bg={useColorModeValue("#F9F9F9", "gray.800")} maxW={"100%"}>
         <Stack
-          py={{ base: 20, md: 24 }}
+          py={{ base: 12, md: 24 }}
           px={{ base: 10, md: 20 }}
           align="center"
           justify="center"
@@ -87,38 +87,41 @@ const index: React.FC<indexProps> = ({}) => {
                 You can also contact me through my social networks.
               </Text>
               <Stack as={Box} pt={2} direction={"row"} spacing={4}>
-                <Button colorScheme="green">
-                  <Stack
-                    as={Box}
-                    direction={"row"}
-                    justify={"stretch"}
-                    spacing={2}
-                  >
-                    <ChakraLink
-                      href="https://www.linkedin.com/in/damianricobelli/"
-                      isExternal
+                <ChakraLink
+                  href="https://www.linkedin.com/in/damianricobelli/"
+                  isExternal
+                  _hover={{ textDecoration: "none" }}
+                >
+                  <Button colorScheme="green">
+                    <Stack
+                      as={Box}
+                      direction={"row"}
+                      justify={"stretch"}
+                      spacing={2}
                     >
-                      Linkedin
-                    </ChakraLink>
-                    <AiFillLinkedin style={{ marginTop: 1 }} />
-                  </Stack>
-                </Button>
-                <Button colorScheme="green">
-                  <Stack
-                    as={Box}
-                    direction={"row"}
-                    justify={"stretch"}
-                    spacing={2}
-                  >
-                    <ChakraLink
-                      href="https://twitter.com/damianricobelli"
-                      isExternal
+                      <Text>Linkedin</Text>
+
+                      <AiFillLinkedin style={{ marginTop: 1 }} />
+                    </Stack>
+                  </Button>
+                </ChakraLink>
+                <ChakraLink
+                  href="https://twitter.com/damianricobelli"
+                  isExternal
+                  _hover={{ textDecoration: "none" }}
+                >
+                  <Button colorScheme="green">
+                    <Stack
+                      as={Box}
+                      direction={"row"}
+                      justify={"stretch"}
+                      spacing={2}
                     >
-                      Twitter
-                    </ChakraLink>
-                    <AiOutlineTwitter style={{ marginTop: 1 }} />
-                  </Stack>
-                </Button>
+                      <Text>Twitter</Text>{" "}
+                      <AiOutlineTwitter style={{ marginTop: 1 }} />
+                    </Stack>
+                  </Button>
+                </ChakraLink>
               </Stack>
               <Text
                 pt={10}
@@ -137,22 +140,23 @@ const index: React.FC<indexProps> = ({}) => {
                 Some starred side projects
               </Text>
               <Stack as={Box} pt={2} direction={"row"} spacing={4}>
-                <Button colorScheme="green">
-                  <Stack
-                    as={Box}
-                    direction={"row"}
-                    justify={"stretch"}
-                    spacing={2}
-                  >
-                    <ChakraLink
-                      href="https://github.com/damianricobelli/"
-                      isExternal
+                <ChakraLink
+                  href="https://github.com/damianricobelli/"
+                  isExternal
+                  _hover={{ textDecoration: "none" }}
+                >
+                  <Button colorScheme="green">
+                    <Stack
+                      as={Box}
+                      direction={"row"}
+                      justify={"stretch"}
+                      spacing={2}
                     >
-                      Repositories
-                    </ChakraLink>
-                    <AiFillGithub style={{ marginTop: 1 }} />
-                  </Stack>
-                </Button>
+                      <Text>Repositories</Text>
+                      <AiFillGithub style={{ marginTop: 1 }} />
+                    </Stack>
+                  </Button>
+                </ChakraLink>
               </Stack>
             </Box>
             <Box
