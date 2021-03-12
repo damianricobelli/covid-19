@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/damianricobelli/covid-19">
-    <img src="assets/img/continents/all-world.png" alt="Logo" width="80" height="80">
+    <img src="public/assets/img/continents/all-world.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Covid World</h3>
