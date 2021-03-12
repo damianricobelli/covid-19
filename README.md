@@ -110,6 +110,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 [Twitter](https://twitter.com/damianricobelli)
 
-- [Linkedin](https://www.linkedin.com/in/damianricobelli/)
+[Linkedin](https://www.linkedin.com/in/damianricobelli/)
 
 Project Link: [COVID WORLD](https://github.com/damianricobelli/covid-19)
