@@ -108,6 +108,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Damián Ricobelli - [@damianricobelli](https://twitter.com/damianricobelli)
+[Twitter](https://twitter.com/damianricobelli)
 
-Project Link: [https://github.com/damianricobelli/covid-19](https://github.com/damianricobelli/covid-19)
+- [Linkedin](https://www.linkedin.com/in/damianricobelli/)
+
+Project Link: [COVID WORLD](https://github.com/damianricobelli/covid-19)
