@@ -1,14 +1,8 @@
-[![Contributors][contributors-shield]][https://github.com/damianricobelli/covid-19/graphs/contributors]
-[![Forks][forks-shield]][https://github.com/damianricobelli/covid-19/network/members]
-[![Stargazers][stars-shield]][https://github.com/damianricobelli/covid-19/stargazers]
-[![Issues][issues-shield]][https://github.com/damianricobelli/covid-19/issues]
-[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/damianricobelli/]
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
   <a href="https://github.com/damianricobelli/covid-19">
-    <img src="assets/img/continents/all-world.svg" alt="Logo" width="80" height="80">
+    <img src="assets/img/continents/all-world.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Covid World</h3>
@@ -114,6 +108,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - [@damianricobelli](https://twitter.com/damianricobelli)
+Damián Ricobelli - [@damianricobelli](https://twitter.com/damianricobelli)
 
-Project Link: [https://github.com/damianricobelli/cobid-19](https://github.com/damianricobelli/cobid-19)
+Project Link: [https://github.com/damianricobelli/covid-19](https://github.com/damianricobelli/covid-19)
