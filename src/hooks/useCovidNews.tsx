@@ -9,8 +9,8 @@ function getStatus({ data, error }) {
 
 export const CONFIG = {
   headers: {
-    "x-rapidapi-key": process.env.key,
-    "x-rapidapi-host": process.env.host,
+    "x-rapidapi-key": process.env.NEXT_PUBLIC_KEY,
+    "x-rapidapi-host": process.env.NEXT_PUBLIC_HOST,
     useQueryString: true
   }
 }
